@@ -3,8 +3,6 @@ import 'package:carpar_app/page/ParkingOverview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'CityView.dart';
-
 class TabsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,7 @@ class TabsView extends StatelessWidget {
           children: [
             ParkingOverview("2314234"),
             MapView(),
-            MapView(),
+            ParkingOverview("3"),
           ],
         ),
       ),
