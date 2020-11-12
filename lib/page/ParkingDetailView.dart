@@ -12,110 +12,121 @@ class ParkingDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Parkhausname"),
-        actions: [
-          FlatButton(
-            textColor: Colors.white,
-            onPressed: () {},
-            child: Icon(Icons.star_border),
-            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-          )
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 30,
-            child: Container(
-              color: Colors.green,
-              child: Center(
-                  child: Text("Offen",
-                      style: (TextStyle(fontSize: 18, color: Colors.white)))),
+    return Consumer<City>(builder: (context, city, child) {
+      var selectedParking = city.parkings
+          .firstWhere((element) => element.sId == (this.parkingId));
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("${selectedParking.name}"),
+          actions: [
+            FlatButton(
+              textColor: Colors.white,
+              onPressed: () {},
+              child: Icon(Icons.star_border),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+            )
+          ],
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 30,
+              child: Container(
+                color: Colors.green,
+                child: Center(
+                    child: Text("Offen",
+                        style: (TextStyle(fontSize: 18, color: Colors.white)))),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 160,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Spacer(),
-                      Text("50",
-                          style:
-                              (TextStyle(fontSize: 56, color: Colors.green))),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 6.0, top: 30.0),
-                        child: Text("/150", style: (TextStyle(fontSize: 30))),
-                      ),
-                      Spacer()
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text("33% frei", style: TextStyle(fontSize: 20)),
+            SizedBox(
+              height: 160,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Spacer(),
+                        Text("${selectedParking.parking.freeParking}",
+                            style:
+                                (TextStyle(fontSize: 56, color: Colors.green))),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0, top: 30.0),
+                          child: Text(
+                              "/${selectedParking.parking.totalParking}",
+                              style: (TextStyle(fontSize: 30))),
+                        ),
+                        Spacer()
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                          "${(selectedParking.parking.freeParking / selectedParking.parking.totalParking * 100).round()}% frei",
+                          style: TextStyle(fontSize: 20)),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Divider(color: Colors.black, thickness: 1.5),
+            Expanded(
+              flex: 10,
+              child: Container(
+                child: ListView(
+                  children: [
+                    ListTile(
+                        leading: Icon(Icons.pin_drop),
+                        title: Text(
+                            "${selectedParking.address.street}\n${selectedParking.address.zip} ${selectedParking.address.city}")),
+                    ListTile(
+                      leading: Icon(Icons.open_in_browser),
+                      title: Text("${selectedParking.website}"),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.local_parking),
+                      title: Text(
+                          "Behindertenparkplätze: ${selectedParking.parking.disabledParking}\n"
+                          "Frauenparkplätze: ${selectedParking.parking.womenParking}\n"
+                          "Familienparkplätze: ${selectedParking.parking.familyParking}\n"
+                          "XL-Parkplätze: ${selectedParking.parking.xlParking}\n"
+                          "Elektroparkplätze: ${selectedParking.parking.electroParking}\n"),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.watch_later),
+                      title: Text("${selectedParking.openHours}"),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.attach_money),
+                      title: Text("${selectedParking.payment}"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: CameraPosition(
+                  target:
+                      LatLng(selectedParking.geo.lat, selectedParking.geo.lon),
+                  zoom: 15,
+                ),
+                markers: {
+                  Marker(
+                    markerId: MarkerId(selectedParking.apiId),
+                    position: LatLng(
+                        selectedParking.geo.lat, selectedParking.geo.lon),
                   )
-                ],
+                },
+                myLocationEnabled: true,
               ),
-            ),
-          ),
-          Divider(color: Colors.black, thickness: 1.5),
-          Expanded(
-            flex: 10,
-            child: Container(
-              child: ListView(
-                children: [
-                  Consumer<City>(
-                    builder: (context, city, child) {
-                      return RaisedButton(
-                        child: Text("${city.name}"),
-                      );
-                    },
-                  ),
-                  ListTile(
-                      leading: Icon(Icons.pin_drop),
-                      title: Text("Gliessereistrasse 8\ntest")),
-                  ListTile(
-                    leading: Icon(Icons.open_in_browser),
-                    title: Text("www.plsz.ch"),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.local_parking),
-                    title: Text("www.plsz.ch"),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.watch_later),
-                    title: Text("Montag: 7:00 - 18:00\n"
-                        "Dienstag: 7:00 - 18:00\n"
-                        "Mittwoch: 7:00 - 18:00\n"
-                        "Donnerstag: 7:00 - 18:00\n"
-                        "Freitag: 7:00 - 18:00\n"
-                        "Samstag: 7:00 - 18:00\n"
-                        "Sonntag: 7:00 - 18:00"),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.attach_money),
-                    title: Text("www.plsz.ch"),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition:
-                  CameraPosition(target: LatLng(47.40773, 8.5005)),
-              myLocationEnabled: true,
-            ),
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
+    });
   }
 }

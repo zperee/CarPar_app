@@ -1,8 +1,10 @@
+import 'package:carpar_app/model/City.dart';
 import 'package:location/location.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'ParkingDetailView.dart';
 
@@ -25,15 +27,22 @@ class _MapViewState extends State<MapView> {
             CameraPosition(target: LatLng(l.latitude, l.longitude), zoom: 15),
           ))
         });
+
     setState(() {
-      _markers.add(Marker(
-        markerId: MarkerId("teest"),
-        position: LatLng(37.42796133580664, -121.085749655969),
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ParkingDetailView("4534345"))),
-      ));
+      Provider.of<City>(context, listen: false).parkings.forEach((parking) {
+        _markers.add(
+          Marker(
+            markerId: MarkerId(parking.sId),
+            position: LatLng(parking.geo.lat, parking.geo.lon),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ParkingDetailView(parking.sId),
+              ),
+            ),
+          ),
+        );
+      });
     });
   }
 

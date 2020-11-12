@@ -1,6 +1,8 @@
+import 'package:carpar_app/model/City.dart';
 import 'package:carpar_app/page/MapView.dart';
 import 'package:carpar_app/page/ParkingOverview.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TabsView extends StatelessWidget {
   @override
@@ -16,14 +18,16 @@ class TabsView extends StatelessWidget {
               Tab(icon: Icon(Icons.star)),
             ],
           ),
-          title: Text('Zürich'),
+          title: Consumer<City>(builder: (context, city, child) {
+            return Text(city.name);
+          }),
         ),
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            ParkingOverview("2314234"),
+            ParkingOverview(),
             MapView(),
-            ParkingOverview("3"),
+            ParkingOverview(),
           ],
         ),
       ),

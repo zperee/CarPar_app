@@ -10,7 +10,6 @@ class City extends ChangeNotifier {
   bool showInUI;
 
   City(String cityId) {
-    // this.sId = cityId;
     http
         .get("https://carpar-api.herokuapp.com/api/city/$cityId")
         .then((res) => fromJson(convert.jsonDecode(res.body)))
