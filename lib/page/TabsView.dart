@@ -20,6 +20,7 @@ class TabsView extends StatelessWidget {
           title: Text('Zürich'),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
             ParkingOverview("2314234"),
             MapView(),

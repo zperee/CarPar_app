@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'package:location/location.dart';
 
-import 'package:carpar_app/helper/LocationHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,7 +12,7 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
-  LatLng _initialcameraposition = LatLng(20.5937, 78.9629);
+  LatLng _initialCameraPosition = LatLng(47.40773, 8.5005);
   GoogleMapController _controller;
   Location _location = Location();
 
@@ -22,13 +20,11 @@ class _MapViewState extends State<MapView> {
 
   void _onMapCreated(GoogleMapController _cntlr) {
     _controller = _cntlr;
-    _location.onLocationChanged.listen((l) {
-      _controller.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(target: LatLng(l.latitude, l.longitude), zoom: 15),
-        ),
-      );
-    });
+    _location.getLocation().then((l) => {
+          _controller.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(target: LatLng(l.latitude, l.longitude), zoom: 15),
+          ))
+        });
     setState(() {
       _markers.add(Marker(
         markerId: MarkerId("teest"),
@@ -51,7 +47,7 @@ class _MapViewState extends State<MapView> {
           children: [
             GoogleMap(
               initialCameraPosition:
-                  CameraPosition(target: _initialcameraposition),
+                  CameraPosition(target: _initialCameraPosition),
               mapType: MapType.normal,
               onMapCreated: _onMapCreated,
               myLocationEnabled: true,
