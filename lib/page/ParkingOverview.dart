@@ -16,7 +16,7 @@ class ParkingOverview extends StatelessWidget {
               title: Text(city.parkings[index].name),
               subtitle: Text("Entfernung"),
               trailing: Text(
-                  "${city.parkings[index].parking.freeParking} / ${city.parkings[index].parking.totalParking}"),
+                  "${city.parkings[index].free} / ${city.parkings[index].parking.totalParking}"),
               onTap: () {
                 Navigator.push(
                   context,

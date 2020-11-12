@@ -48,7 +48,7 @@ class ParkingDetailView extends StatelessWidget {
                     Row(
                       children: [
                         Spacer(),
-                        Text("${selectedParking.parking.freeParking}",
+                        Text("${selectedParking.free}",
                             style:
                                 (TextStyle(fontSize: 56, color: Colors.green))),
                         Padding(
@@ -63,7 +63,7 @@ class ParkingDetailView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
-                          "${(selectedParking.parking.freeParking / selectedParking.parking.totalParking * 100).round()}% frei",
+                          "${(selectedParking.free / selectedParking.parking.totalParking * 100).round()}% frei",
                           style: TextStyle(fontSize: 20)),
                     )
                   ],

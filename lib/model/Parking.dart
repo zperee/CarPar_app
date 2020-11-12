@@ -14,6 +14,8 @@ class Parking {
   List<OpenHours> openHours;
   List<int> payment;
   String apiId;
+  int free;
+  DateTime updatedAt;
 
   Parking(
       {this.sId,
@@ -25,12 +27,16 @@ class Parking {
       this.address,
       this.openHours,
       this.payment,
-      this.apiId});
+      this.apiId,
+      this.free,
+      this.updatedAt});
 
   Parking.fromJson(Map<String, dynamic> json) {
     sId = json['_id'] ?? "";
     name = json['name'] ?? "";
     city = json['city'] ?? "";
+    free = json['free'] ?? 0;
+    updatedAt = DateTime.parse(json['updatedAt'].toString()) ?? "";
     website = json['website'] ?? "";
     parking = json['parking'] != null
         ? new ParkingInfo.fromJson(json['parking'])

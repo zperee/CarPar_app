@@ -1,5 +1,4 @@
 class ParkingInfo {
-  int freeParking;
   int totalParking;
   int electroParking;
   int disabledParking;
@@ -8,8 +7,7 @@ class ParkingInfo {
   int xlParking;
 
   ParkingInfo(
-      {this.freeParking,
-      this.totalParking,
+      {this.totalParking,
       this.electroParking,
       this.disabledParking,
       this.familyParking,
@@ -17,7 +15,6 @@ class ParkingInfo {
       this.xlParking});
 
   ParkingInfo.fromJson(Map<String, dynamic> json) {
-    freeParking = json['freeParking'] ?? 0;
     totalParking = json['totalParking'] ?? 0;
     electroParking = json['electroParking'] ?? 0;
     disabledParking = json['disabledParking'] ?? 0;
