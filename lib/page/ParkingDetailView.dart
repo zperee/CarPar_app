@@ -1,8 +1,9 @@
-import 'dart:developer';
-
+import 'package:carpar_app/main.dart';
+import 'package:carpar_app/model/City.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ParkingDetailView extends StatelessWidget {
   String parkingId;
@@ -68,6 +69,13 @@ class ParkingDetailView extends StatelessWidget {
             child: Container(
               child: ListView(
                 children: [
+                  Consumer<City>(
+                    builder: (context, city, child) {
+                      return RaisedButton(
+                        child: Text("${city.name}"),
+                      );
+                    },
+                  ),
                   ListTile(
                       leading: Icon(Icons.pin_drop),
                       title: Text("Gliessereistrasse 8\ntest")),

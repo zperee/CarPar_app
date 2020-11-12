@@ -1,13 +1,14 @@
 import 'Address.dart';
 import 'Geo.dart';
 import 'OpenHours.dart';
+import 'ParkingInfo.dart';
 
 class Parking {
   String sId;
   String name;
   String city;
   String website;
-  Parking parking;
+  ParkingInfo parking;
   Geo geo;
   Address address;
   List<OpenHours> openHours;
@@ -27,12 +28,13 @@ class Parking {
       this.apiId});
 
   Parking.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    name = json['name'];
-    city = json['city'];
-    website = json['website'];
-    parking =
-        json['parking'] != null ? new Parking.fromJson(json['parking']) : null;
+    sId = json['_id'] ?? "";
+    name = json['name'] ?? "";
+    city = json['city'] ?? "";
+    website = json['website'] ?? "";
+    parking = json['parking'] != null
+        ? new ParkingInfo.fromJson(json['parking'])
+        : null;
     geo = json['geo'] != null ? new Geo.fromJson(json['geo']) : null;
     address =
         json['address'] != null ? new Address.fromJson(json['address']) : null;
@@ -42,7 +44,9 @@ class Parking {
         openHours.add(new OpenHours.fromJson(v));
       });
     }
-    payment = json['payment'].cast<int>();
+    if (json['payment'] != null) {
+      payment = json['payment'].cast<int>();
+    }
     apiId = json['apiId'];
   }
 }

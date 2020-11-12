@@ -1,6 +1,5 @@
 import 'package:carpar_app/page/MapView.dart';
 import 'package:carpar_app/page/ParkingOverview.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TabsView extends StatelessWidget {

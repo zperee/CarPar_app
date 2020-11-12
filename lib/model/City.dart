@@ -1,14 +1,24 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'Parking.dart';
+import 'dart:convert' as convert;
 
-class City {
+class City extends ChangeNotifier {
   List<Parking> parkings;
   String sId;
   String name;
   bool showInUI;
 
-  City({this.parkings, this.sId, this.name, this.showInUI});
+  City(String cityId) {
+    // this.sId = cityId;
+    http
+        .get("https://carpar-api.herokuapp.com/api/city/$cityId")
+        .then((res) => fromJson(convert.jsonDecode(res.body)))
+        .then((value) => notifyListeners());
+  }
 
-  City.fromJson(Map<String, dynamic> json) {
+  fromJson(Map<String, dynamic> json) {
+    print(json);
     if (json['parkings'] != null) {
       parkings = new List<Parking>();
       json['parkings'].forEach((v) {

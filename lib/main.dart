@@ -2,9 +2,11 @@ import 'package:carpar_app/page/TabsView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'model/City.dart';
+
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (context) => Counter2(),
+    create: (context) => City("5f997d496f014fa38c79c083"),
     child: CarParApp(),
   ));
 }
