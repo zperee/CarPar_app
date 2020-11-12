@@ -1,8 +1,12 @@
 import 'package:carpar_app/page/TabsView.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(CarParApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => Counter2(),
+    child: CarParApp(),
+  ));
 }
 
 class CarParApp extends StatelessWidget {
@@ -36,5 +40,14 @@ class CarParApp extends StatelessWidget {
       );
     });
     return MaterialColor(color.value, swatch);
+  }
+}
+
+class Counter2 extends ChangeNotifier {
+  int i = 0;
+
+  up() {
+    i++;
+    notifyListeners();
   }
 }

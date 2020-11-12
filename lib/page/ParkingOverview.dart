@@ -19,6 +19,7 @@ class ParkingOverview extends StatelessWidget {
           return ListTile(
             title: Text(items[index].name),
             subtitle: Text("Entfernung"),
+            trailing: Text("50/150"),
             onTap: () {
               Navigator.push(
                 context,

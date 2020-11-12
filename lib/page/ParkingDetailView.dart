@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ParkingDetailView extends StatelessWidget {
   String parkingId;
@@ -23,8 +26,8 @@ class ParkingDetailView extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            flex: 1,
+          SizedBox(
+            height: 30,
             child: Container(
               color: Colors.green,
               child: Center(
@@ -32,8 +35,8 @@ class ParkingDetailView extends StatelessWidget {
                       style: (TextStyle(fontSize: 18, color: Colors.white)))),
             ),
           ),
-          Expanded(
-            flex: 6,
+          SizedBox(
+            height: 160,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -63,59 +66,46 @@ class ParkingDetailView extends StatelessWidget {
           Expanded(
             flex: 10,
             child: Container(
-              child: Column(
+              child: ListView(
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Icon(Icons.pin_drop),
-                      ),
-                      Column(
-                        children: [
-                          Text("Gliessereistrasse 18"),
-                          Text("8005 Zürich"),
-                        ],
-                      ),
-                    ],
+                  ListTile(
+                      leading: Icon(Icons.pin_drop),
+                      title: Text("Gliessereistrasse 8\ntest")),
+                  ListTile(
+                    leading: Icon(Icons.open_in_browser),
+                    title: Text("www.plsz.ch"),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Icon(Icons.open_in_browser),
-                      ),
-                      Column(
-                        children: [
-                          Text("www.plsz.ch"),
-                        ],
-                      ),
-                    ],
+                  ListTile(
+                    leading: Icon(Icons.local_parking),
+                    title: Text("www.plsz.ch"),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Icon(Icons.watch_later),
-                      ),
-                      Column(
-                        children: [
-                          Text("Montag: 7:00 - 18:00"),
-                          Text("Dienstag: 7:00 - 18:00"),
-                          Text("Mittwoch: 7:00 - 18:00"),
-                          Text("Donnerstag: 7:00 - 18:00"),
-                          Text("Freitag: 7:00 - 18:00"),
-                          Text("Samstag: 7:00 - 18:00"),
-                          Text("Sonntag: 7:00 - 18:00"),
-                        ],
-                      ),
-                    ],
+                  ListTile(
+                    leading: Icon(Icons.watch_later),
+                    title: Text("Montag: 7:00 - 18:00\n"
+                        "Dienstag: 7:00 - 18:00\n"
+                        "Mittwoch: 7:00 - 18:00\n"
+                        "Donnerstag: 7:00 - 18:00\n"
+                        "Freitag: 7:00 - 18:00\n"
+                        "Samstag: 7:00 - 18:00\n"
+                        "Sonntag: 7:00 - 18:00"),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.attach_money),
+                    title: Text("www.plsz.ch"),
                   ),
                 ],
               ),
             ),
           ),
-          Expanded(flex: 10, child: Text("Map"))
+          Expanded(
+            flex: 5,
+            child: GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition:
+                  CameraPosition(target: LatLng(47.40773, 8.5005)),
+              myLocationEnabled: true,
+            ),
+          )
         ],
       ),
     );
