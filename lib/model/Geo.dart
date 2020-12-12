@@ -1,11 +1,11 @@
 class Geo {
-  double lat;
-  double lon;
+  String type;
+  List<double> coordinates;
 
-  Geo({this.lat, this.lon});
+  Geo({this.type, this.coordinates});
 
   Geo.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lon = json['lon'];
+    type = json['type'];
+    coordinates = json['coordinates'].cast<double>();
   }
 }

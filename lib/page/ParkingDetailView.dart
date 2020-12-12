@@ -110,15 +110,15 @@ class ParkingDetailView extends StatelessWidget {
               child: GoogleMap(
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
-                  target:
-                      LatLng(selectedParking.geo.lat, selectedParking.geo.lon),
+                  target: LatLng(selectedParking.geo.coordinates[0],
+                      selectedParking.geo.coordinates[1]),
                   zoom: 15,
                 ),
                 markers: {
                   Marker(
                     markerId: MarkerId(selectedParking.apiId),
-                    position: LatLng(
-                        selectedParking.geo.lat, selectedParking.geo.lon),
+                    position: LatLng(selectedParking.geo.coordinates[0],
+                        selectedParking.geo.coordinates[1]),
                   )
                 },
                 myLocationEnabled: true,

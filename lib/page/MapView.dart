@@ -33,7 +33,8 @@ class _MapViewState extends State<MapView> {
         _markers.add(
           Marker(
             markerId: MarkerId(parking.sId),
-            position: LatLng(parking.geo.lat, parking.geo.lon),
+            position:
+                LatLng(parking.geo.coordinates[0], parking.geo.coordinates[1]),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(

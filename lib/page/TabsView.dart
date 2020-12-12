@@ -19,7 +19,7 @@ class TabsView extends StatelessWidget {
             ],
           ),
           title: Consumer<City>(builder: (context, city, child) {
-            return Text(city.name);
+            return city.name != null ? Text(city.name) : Text("Loading");
           }),
         ),
         body: TabBarView(

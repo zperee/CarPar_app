@@ -44,12 +44,3 @@ class CarParApp extends StatelessWidget {
     return MaterialColor(color.value, swatch);
   }
 }
-
-class Counter2 extends ChangeNotifier {
-  int i = 0;
-
-  up() {
-    i++;
-    notifyListeners();
-  }
-}

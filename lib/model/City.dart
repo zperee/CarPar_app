@@ -11,13 +11,12 @@ class City extends ChangeNotifier {
 
   City(String cityId) {
     http
-        .get("https://carpar-api.herokuapp.com/api/city/$cityId")
+        .get("https://carpar-api.herokuapp.com/api/city/id/$cityId")
         .then((res) => fromJson(convert.jsonDecode(res.body)))
         .then((value) => notifyListeners());
   }
 
   fromJson(Map<String, dynamic> json) {
-    print(json);
     if (json['parkings'] != null) {
       parkings = new List<Parking>();
       json['parkings'].forEach((v) {

@@ -41,7 +41,7 @@ class Parking {
     parking = json['parking'] != null
         ? new ParkingInfo.fromJson(json['parking'])
         : null;
-    geo = json['geo'] != null ? new Geo.fromJson(json['geo']) : null;
+    geo = json['location'] != null ? new Geo.fromJson(json['location']) : null;
     address =
         json['address'] != null ? new Address.fromJson(json['address']) : null;
     if (json['openHours'] != null) {
