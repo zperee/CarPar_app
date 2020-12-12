@@ -25,9 +25,9 @@ class TabsView extends StatelessWidget {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            ParkingOverview(),
+            ParkingOverview(0),
             MapView(),
-            ParkingOverview(),
+            ParkingOverview(1),
           ],
         ),
       ),

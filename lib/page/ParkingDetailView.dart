@@ -1,14 +1,24 @@
+import 'package:carpar_app/control/SharedPrefControl.dart';
 import 'package:carpar_app/main.dart';
 import 'package:carpar_app/model/City.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ParkingDetailView extends StatelessWidget {
   String parkingId;
 
   ParkingDetailView(this.parkingId);
+
+  launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +31,9 @@ class ParkingDetailView extends StatelessWidget {
           actions: [
             FlatButton(
               textColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                SharedPrefControl.saveFavParking(selectedParking.apiId);
+              },
               child: Icon(Icons.star_border),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             )
@@ -81,9 +93,11 @@ class ParkingDetailView extends StatelessWidget {
                         title: Text(
                             "${selectedParking.address.street}\n${selectedParking.address.zip} ${selectedParking.address.city}")),
                     ListTile(
-                      leading: Icon(Icons.open_in_browser),
-                      title: Text("${selectedParking.website}"),
-                    ),
+                        leading: Icon(Icons.open_in_browser),
+                        title: Text("${selectedParking.website}"),
+                        onTap: () {
+                          launchUrl(selectedParking.website);
+                        }),
                     ListTile(
                       leading: Icon(Icons.local_parking),
                       title: Text(
