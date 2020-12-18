@@ -27,4 +27,11 @@ class City extends ChangeNotifier {
     name = json['name'];
     showInUI = json['showInUI'];
   }
+
+  void updateData(String cityId) {
+    http
+        .get("https://carpar-api.herokuapp.com/api/city/id/$cityId")
+        .then((res) => fromJson(convert.jsonDecode(res.body)))
+        .then((value) => notifyListeners());
+  }
 }

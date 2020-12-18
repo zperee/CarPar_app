@@ -13,8 +13,6 @@ class ParkingOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(pageType);
-
     return Consumer<City>(builder: (context, city, child) {
       if (city.parkings != null && city.parkings.length > 0) {
         //var favParking = SharedPrefControl.getFavParkings();
@@ -23,7 +21,13 @@ class ParkingOverview extends StatelessWidget {
             ? city.parkings
             : city.parkings.where((p) => p.apiId.contains("NP08")).toList();
 
-        return ListView.builder(
+        Future<void> _pullRefresh() async {
+          city.updateData(city.sId);
+        }
+
+        return RefreshIndicator(
+          onRefresh: _pullRefresh,
+          child: ListView.builder(
             itemCount: parking.length,
             itemBuilder: (context, index) {
               return ListTile(
@@ -39,9 +43,24 @@ class ParkingOverview extends StatelessWidget {
                   );
                 },
               );
-            });
+            },
+          ),
+        );
       } else {
-        return Text("Loading data");
+        return Center(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xff345363)),
+                  strokeWidth: 5,
+                )
+              ],
+            ),
+          ),
+        );
       }
     });
   }

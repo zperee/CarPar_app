@@ -34,7 +34,17 @@ class ParkingDetailView extends StatelessWidget {
               onPressed: () {
                 SharedPrefControl.saveFavParking(selectedParking.apiId);
               },
-              child: Icon(Icons.star_border),
+              child: FutureBuilder<bool>(
+                  future: SharedPrefControl.parkingIsFav(this.parkingId),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    print(snapshot.data);
+                    if (snapshot.data) {
+                      return Icon(Icons.star);
+                    } else {
+                      return Icon(Icons.star_border);
+                    }
+                  }),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             )
           ],
