@@ -1,5 +1,4 @@
 import 'package:carpar_app/control/SharedPrefControl.dart';
-import 'package:carpar_app/main.dart';
 import 'package:carpar_app/model/City.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +100,11 @@ class ParkingDetailView extends StatelessWidget {
                     ListTile(
                         leading: Icon(Icons.pin_drop),
                         title: Text(
-                            "${selectedParking.address.street}\n${selectedParking.address.zip} ${selectedParking.address.city}")),
+                            "${selectedParking.address.street}\n${selectedParking.address.zip} ${selectedParking.address.city}"),
+                        onTap: () {
+                          launchUrl(
+                              'https://www.google.com/maps/search/?api=1&query=${selectedParking.geo.coordinates[0]},${selectedParking.geo.coordinates[0]}');
+                        }),
                     ListTile(
                         leading: Icon(Icons.open_in_browser),
                         title: Text("${selectedParking.website}"),
@@ -119,18 +122,20 @@ class ParkingDetailView extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Icon(Icons.watch_later),
-                      title: Text("${selectedParking.openHours}"),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.attach_money),
-                      title: Text("${selectedParking.payment}"),
+                      title: Text("${selectedParking.openHours.map((element) {
+                        return element.day.toUpperCase() +
+                            " - " +
+                            element.dayTo.toUpperCase() +
+                            ": " +
+                            element.open;
+                      })}"),
                     ),
                   ],
                 ),
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 10,
               child: GoogleMap(
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
