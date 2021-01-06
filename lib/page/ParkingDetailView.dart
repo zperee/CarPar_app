@@ -6,11 +6,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ParkingDetailView extends StatelessWidget {
+class ParkingDetailView extends StatefulWidget {
   String parkingId;
 
   ParkingDetailView(this.parkingId);
 
+  @override
+  _ParkingDetailViewState createState() => _ParkingDetailViewState();
+}
+
+class _ParkingDetailViewState extends State<ParkingDetailView> {
   launchUrl(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -23,22 +28,22 @@ class ParkingDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<City>(builder: (context, city, child) {
       var selectedParking = city.parkings
-          .firstWhere((element) => element.sId == (this.parkingId));
+          .firstWhere((element) => element.sId == (this.widget.parkingId));
       return Scaffold(
         appBar: AppBar(
           title: Text("${selectedParking.name}"),
           actions: [
             FlatButton(
               textColor: Colors.white,
-              onPressed: () {
-                SharedPrefControl.saveFavParking(selectedParking.apiId);
+              onPressed: () async {
+                await SharedPrefControl.toggleFavParking(selectedParking.sId);
+                setState(() {});
               },
               child: FutureBuilder<bool>(
-                  future: SharedPrefControl.parkingIsFav(this.parkingId),
+                  future: SharedPrefControl.parkingIsFav(selectedParking.sId),
                   builder:
                       (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                    print(snapshot.data);
-                    if (snapshot.data) {
+                    if (snapshot.hasData && snapshot.data) {
                       return Icon(Icons.star);
                     } else {
                       return Icon(Icons.star_border);
