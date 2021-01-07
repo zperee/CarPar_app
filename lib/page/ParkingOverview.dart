@@ -40,28 +40,32 @@ class _ParkingOverviewState extends State<ParkingOverview> {
                 city.updateData(city.sId);
               }
 
-              return RefreshIndicator(
-                onRefresh: _pullRefresh,
-                child: ListView.builder(
-                  itemCount: parking.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(parking[index].name),
-                      trailing: Text(
-                          "${parking[index].free} / ${parking[index].parking.totalParking}"),
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ParkingDetailView(parking[index].sId)),
+              print(parking.length);
+              if (parking.length > 0) {
+                return RefreshIndicator(
+                  onRefresh: _pullRefresh,
+                  child: ListView.builder(
+                      itemCount: parking.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(parking[index].name),
+                          trailing: Text(
+                              "${parking[index].free} / ${parking[index].parking.totalParking}"),
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ParkingDetailView(parking[index].sId)),
+                            );
+                            setState(() {});
+                          },
                         );
-                        setState(() {});
-                      },
-                    );
-                  },
-                ),
-              );
+                      }),
+                );
+              } else {
+                return Center(child: Text("Keine Favoriten gespeichert"));
+              }
             } else {
               return Center(
                 child: Padding(

@@ -56,15 +56,27 @@ class _ParkingDetailViewState extends State<ParkingDetailView> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: 30,
-              child: Container(
-                color: Colors.green,
-                child: Center(
-                    child: Text("Offen",
-                        style: (TextStyle(fontSize: 18, color: Colors.white)))),
-              ),
-            ),
+            selectedParking.free > 0
+                ? SizedBox(
+                    height: 30,
+                    child: Container(
+                      color: Colors.green,
+                      child: Center(
+                          child: Text("Offen",
+                              style: (TextStyle(
+                                  fontSize: 18, color: Colors.white)))),
+                    ),
+                  )
+                : SizedBox(
+                    height: 30,
+                    child: Container(
+                      color: Colors.red,
+                      child: Center(
+                          child: Text("Voll / Geschlossen",
+                              style: (TextStyle(
+                                  fontSize: 18, color: Colors.white)))),
+                    ),
+                  ),
             SizedBox(
               height: 160,
               child: Container(
@@ -129,7 +141,7 @@ class _ParkingDetailViewState extends State<ParkingDetailView> {
                       leading: Icon(Icons.watch_later),
                       title: Text("${selectedParking.openHours.map((element) {
                         return element.day.toUpperCase() +
-                            " - " +
+                            " – " +
                             element.dayTo.toUpperCase() +
                             ": " +
                             element.open;
