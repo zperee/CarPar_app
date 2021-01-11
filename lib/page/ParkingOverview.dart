@@ -40,7 +40,6 @@ class _ParkingOverviewState extends State<ParkingOverview> {
                 city.updateData(city.sId);
               }
 
-              print(parking.length);
               if (parking.length > 0) {
                 return RefreshIndicator(
                   onRefresh: _pullRefresh,
